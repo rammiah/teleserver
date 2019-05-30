@@ -67,9 +67,9 @@ func (CustomerServer) TableName() string {
 }
 
 type Menu struct {
-	Mid   int32
-	Name  string
-	Price float32
+	Mid   int32   `json:"mid"`
+	Name  string  `json:"name"`
+	Price float32 `json:"price"`
 }
 
 func (Menu) TableName() string {

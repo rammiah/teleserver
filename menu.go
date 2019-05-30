@@ -7,14 +7,13 @@ import (
 )
 
 func getMenu(c *gin.Context) {
-	var menus []Menu
-	err := db.Find(&menus).Error
-
+	var menus = make([]Menu, 0)
 	var res = gin.H{
 		"status":  http.StatusOK,
 		"err":     "",
-		"records": "[]",
+		"records": menus,
 	}
+	err := db.Find(&menus).Error
 
 	if err != nil {
 		res["err"] = err.Error()

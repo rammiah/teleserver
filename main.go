@@ -39,6 +39,7 @@ func main() {
 	engine.GET("/userLogin", userLogin)
 	engine.GET("/ping", ping)
 	engine.GET("/getMenu", getMenu)
+	engine.POST("/updateUserPass", updateUserPass)
 
 	err = engine.Run(":7384")
 	if err != nil {
