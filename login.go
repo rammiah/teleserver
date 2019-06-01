@@ -14,27 +14,24 @@ func userLogin(c *gin.Context) {
 	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
 	var user User
 	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
-	fmt.Println(user)
+	//fmt.Println(user)
+	var res = gin.H{
+		"success": false,
+		"name":    "",
+	}
 	if err == gorm.ErrRecordNotFound {
-		c.JSON(http.StatusOK, gin.H{
-			"status": http.StatusOK,
-			"login":  false,
-		})
+		c.JSON(http.StatusOK, res)
 		return
 	} else if err != nil {
 		panic(err)
 	}
 
 	if user.Pass == pass {
-		c.JSON(http.StatusOK, gin.H{
-			"status": http.StatusOK,
-			"login":  true,
-		})
+		res["name"] = user.Name
+		res["success"] = true
+		c.JSON(http.StatusOK, res)
 	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"status": http.StatusOK,
-			"login":  false,
-		})
+		c.JSON(http.StatusOK, res)
 	}
 }
 

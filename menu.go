@@ -9,7 +9,7 @@ import (
 func getMenu(c *gin.Context) {
 	var menus = make([]Menu, 0)
 	var res = gin.H{
-		"status":  http.StatusOK,
+		"success": false,
 		"err":     "",
 		"records": menus,
 	}
@@ -20,6 +20,7 @@ func getMenu(c *gin.Context) {
 		c.JSON(http.StatusOK, res)
 		return
 	}
+	res["success"] = true
 	res["records"] = menus
 	c.JSON(http.StatusOK, res)
 	fmt.Println(res)

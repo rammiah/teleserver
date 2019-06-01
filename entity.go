@@ -27,14 +27,14 @@ func (Cashier) TableName() string {
 }
 
 type Charge struct {
-	Id        int32
-	UserId    string
-	CashierId string
-	Money     float32
-	Year      int32
-	Month     int32
-	Day       int32
-	Tm        time.Time
+	Id        int32   `json:"id"`
+	UserId    string  `json:"-"`
+	CashierId string  `json:"cashier_id"`
+	Money     float32 `json:"money"`
+	Year      int32   `json:"year"`
+	Month     int32   `json:"month"`
+	Day       int32   `json:"day"`
+	Tm        []byte  `json:"tm"`
 }
 
 func (Charge) TableName() string {

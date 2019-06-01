@@ -18,15 +18,13 @@ func userRegister(c *gin.Context) {
 	err := c.ShouldBindJSON(&data)
 
 	var res = gin.H{
-		"status":  0,
 		"success": false,
 		"err":     "",
 		"uid":     "",
 	}
 	if err != nil {
 		res["err"] = err.Error()
-		res["status"] = http.StatusInternalServerError
-		c.JSON(http.StatusInternalServerError, res)
+		c.JSON(http.StatusOK, res)
 		return
 	}
 
@@ -51,7 +49,6 @@ func userRegister(c *gin.Context) {
 	} else {
 		tx.Rollback()
 		res["err"] = err.Error()
-		res["status"] = http.StatusOK
 		c.JSON(http.StatusOK, res)
 		return
 	}
@@ -60,12 +57,10 @@ func userRegister(c *gin.Context) {
 	if err != nil {
 		tx.Rollback()
 		res["err"] = err.Error()
-		res["status"] = http.StatusOK
 		c.JSON(http.StatusOK, res)
 		return
 	}
 	tx.Commit()
-	res["status"] = http.StatusOK
 	res["success"] = true
 	res["uid"] = uid.Uid
 	c.JSON(http.StatusOK, res)

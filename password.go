@@ -8,7 +8,6 @@ import (
 
 func updateUserPass(c *gin.Context) {
 	var res = gin.H{
-		"status":  200,
 		"success": false,
 		"err":     "",
 	}

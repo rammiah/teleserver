@@ -19,6 +19,7 @@ func main() {
 		panic("no config file or open failed")
 	}
 	data, _ := ioutil.ReadAll(file)
+	file.Close()
 	var config = struct {
 		DBUrl string `json:"dbUrl"`
 	}{}
@@ -40,6 +41,8 @@ func main() {
 	engine.GET("/ping", ping)
 	engine.GET("/getMenu", getMenu)
 	engine.POST("/updateUserPass", updateUserPass)
+	engine.GET("/queryConsume", queryConsume)
+	engine.GET("/queryCharge", queryCharge)
 
 	err = engine.Run(":7384")
 	if err != nil {
