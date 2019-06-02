@@ -57,19 +57,26 @@ func service(c *gin.Context) {
 
 func validUserId(c *gin.Context) {
 	var uid = c.Query("uid")
-	var count = 0
 	var res = gin.H{
 		"success": false,
 		"err":     "",
 		"valid":   false,
+		"name":    "",
+		"money":   0,
 	}
-	err := db.Table("user").Where("uid = ?", uid).Count(&count).Error
+	var user User
+	err := db.Table("user").
+		Where("uid = ?", uid).
+		First(&user).
+		Error
 	if err != nil {
 		res["err"] = err.Error()
 		c.JSON(http.StatusOK, res)
 		return
 	}
-	res["valid"] = count > 0
+	res["valid"] = true
 	res["success"] = true
+	res["money"] = user.Money
+	res["name"] = user.Name
 	c.JSON(http.StatusOK, res)
 }
