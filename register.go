@@ -11,9 +11,9 @@ import (
 func userRegister(c *gin.Context) {
 	// 用户注册接口
 	var data = struct {
-		Name string `json:"name"`
-		Pass string `json:"pass"`
-		Menu int32  `json:"menu"`
+		Name string `json:"name" binding:"required"`
+		Pass string `json:"pass" binding:"required"`
+		Menu int32  `json:"menu" binding:"required"`
 	}{}
 	err := c.ShouldBindJSON(&data)
 

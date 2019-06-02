@@ -13,9 +13,9 @@ func updateUserPass(c *gin.Context) {
 	}
 
 	var data = struct {
-		Uid     string `json:"uid"`
-		OldPass string `json:"old_pass"`
-		NewPass string `json:"new_pass"`
+		Uid     string `json:"uid" binding:"required"`
+		OldPass string `json:"old_pass" binding:"required"`
+		NewPass string `json:"new_pass" binding:"required"`
 	}{}
 	//fmt.Println("bind json")
 	err := c.ShouldBindJSON(&data)

@@ -86,17 +86,17 @@ func (Office) TableName() string {
 	return "office"
 }
 
-type Service struct {
+type ServiceRecord struct {
 	Id     int32
 	UserId string
 	SerId  string
 	Year   int32
 	Month  int32
 	Day    int32
-	Tm     time.Time
+	Tm     []byte
 }
 
-func (Service) TableName() string {
+func (ServiceRecord) TableName() string {
 	return "services"
 }
 

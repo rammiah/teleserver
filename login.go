@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
@@ -10,7 +9,7 @@ import (
 func userLogin(c *gin.Context) {
 	uid := c.Query("uid")
 	pass := c.Query("pass")
-	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	//fmt.Printf("uid: %q, pass: %q\n", uid, pass)
 	var user User
 	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
 	//fmt.Println(user)
@@ -41,7 +40,7 @@ func userLogin(c *gin.Context) {
 func customerServerLogin(c *gin.Context) {
 	uid := c.Query("uid")
 	pass := c.Query("pass")
-	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	//fmt.Printf("uid: %q, pass: %q\n", uid, pass)
 	var user CustomerService
 	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
 	//fmt.Println(user)
@@ -70,7 +69,7 @@ func customerServerLogin(c *gin.Context) {
 func cashierLogin(c *gin.Context) {
 	uid := c.Query("uid")
 	pass := c.Query("pass")
-	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	//fmt.Printf("uid: %q, pass: %q\n", uid, pass)
 	var user Cashier
 	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
 	var res = gin.H{
@@ -98,7 +97,7 @@ func cashierLogin(c *gin.Context) {
 func adminLogin(c *gin.Context) {
 	uid := c.Query("uid")
 	pass := c.Query("pass")
-	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	//fmt.Printf("uid: %q, pass: %q\n", uid, pass)
 	var user Admin
 	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
 	//fmt.Println(user)

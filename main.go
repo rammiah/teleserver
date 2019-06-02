@@ -50,6 +50,9 @@ func main() {
 	engine.GET("/cashierLogin", cashierLogin)
 	engine.POST("/charge", charge)
 	engine.GET("customerServerLogin", customerServerLogin)
+	engine.POST("/service", service)
+	engine.GET("/validUserId", validUserId)
+
 	// 监听运行
 	err = engine.Run(":7384")
 	if err != nil {

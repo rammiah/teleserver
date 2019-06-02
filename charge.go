@@ -15,9 +15,9 @@ func charge(c *gin.Context) {
 	//fmt.Println(res)
 
 	var data = struct {
-		CashierId string  `json:"cashier_id"`
-		UserId    string  `json:"user_id"`
-		Money     float32 `json:"money"`
+		CashierId string  `json:"cashier_id" binding:"required"`
+		UserId    string  `json:"user_id" binding:"required"`
+		Money     float32 `json:"money" binding:"required"`
 	}{}
 
 	err := c.ShouldBindJSON(&data)

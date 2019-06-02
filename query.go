@@ -14,7 +14,7 @@ const (
 
 type MonthRecord struct {
 	// 按照月收的没有流水号了
-	Year  int32   `json:"year"`
+	Year  int32   `json:"year" `
 	Month int32   `json:"month"`
 	Cost  float32 `json:"cost"`
 }
