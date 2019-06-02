@@ -56,13 +56,13 @@ func (Consume) TableName() string {
 	return "consume"
 }
 
-type CustomerServer struct {
+type CustomerService struct {
 	Uid  string
 	Name string
 	Pass string
 }
 
-func (CustomerServer) TableName() string {
+func (CustomerService) TableName() string {
 	return "cus_serv"
 }
 

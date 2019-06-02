@@ -28,11 +28,11 @@ func main() {
 		panic("no db url config")
 	}
 	db, err = gorm.Open("mysql", config.DBUrl)
-
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+	db.LogMode(false)
 
 	engine := gin.Default()
 
@@ -43,6 +43,9 @@ func main() {
 	engine.POST("/updateUserPass", updateUserPass)
 	engine.GET("/queryConsume", queryConsume)
 	engine.GET("/queryCharge", queryCharge)
+	engine.GET("/cashierLogin", cashierLogin)
+	engine.POST("/charge", charge)
+	engine.GET("customerServerLogin", customerServerLogin)
 
 	err = engine.Run(":7384")
 	if err != nil {

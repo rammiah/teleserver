@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
 	"net/http"
 )
 
@@ -18,12 +17,43 @@ func userLogin(c *gin.Context) {
 	var res = gin.H{
 		"success": false,
 		"name":    "",
+		"err":     "",
+		"money":   0,
 	}
-	if err == gorm.ErrRecordNotFound {
+	if err != nil {
+		res["err"] = err.Error()
 		c.JSON(http.StatusOK, res)
 		return
-	} else if err != nil {
-		panic(err)
+	}
+
+	if user.Pass == pass {
+		res["name"] = user.Name
+		res["success"] = true
+		res["money"] = user.Money
+		c.JSON(http.StatusOK, res)
+	} else {
+		res["err"] = "wrong number or password"
+		c.JSON(http.StatusOK, res)
+	}
+}
+
+// 客服登录
+func customerServerLogin(c *gin.Context) {
+	uid := c.Query("uid")
+	pass := c.Query("pass")
+	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	var user CustomerService
+	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
+	//fmt.Println(user)
+	var res = gin.H{
+		"success": false,
+		"name":    "",
+		"err":     "",
+	}
+	if err != nil {
+		res["err"] = err.Error()
+		c.JSON(http.StatusOK, res)
+		return
 	}
 
 	if user.Pass == pass {
@@ -31,48 +61,64 @@ func userLogin(c *gin.Context) {
 		res["success"] = true
 		c.JSON(http.StatusOK, res)
 	} else {
+		res["err"] = "wrong number or password"
 		c.JSON(http.StatusOK, res)
 	}
 }
 
-// 客服登录
-func customerServerLogin(name, pass string) {
-	var con_serv CustomerServer
-	err := db.Table(con_serv.TableName()).Where("uid = ?", name).First(&con_serv).Error
-	if err == gorm.ErrRecordNotFound {
-		//return false
-
-	} else if err != nil {
-		panic(err)
-	}
-
-	//return con_serv.Pass == pass
-}
-
 // 收款员登录
-func cashierLogin(name, pass string) {
-	var cashier Cashier
-	err := db.Table(cashier.TableName()).Where("uid = ?", name).First(&cashier).Error
-
-	if err == gorm.ErrRecordNotFound {
-		//return false
-	} else if err != nil {
-		panic(err)
+func cashierLogin(c *gin.Context) {
+	uid := c.Query("uid")
+	pass := c.Query("pass")
+	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	var user Cashier
+	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
+	var res = gin.H{
+		"success": false,
+		"name":    "",
+		"err":     "",
+	}
+	if err != nil {
+		res["err"] = err.Error()
+		c.JSON(http.StatusOK, res)
+		return
 	}
 
-	//return cashier.Pass == pass
+	if user.Pass == pass {
+		res["name"] = user.Name
+		res["success"] = true
+		c.JSON(http.StatusOK, res)
+	} else {
+		res["err"] = "wrong number or password"
+		c.JSON(http.StatusOK, res)
+	}
 }
 
 // 管理员登录
-func adminLogin(name, pass string) {
-	var admin Admin
-	err := db.Table(admin.TableName()).Where("uid = ?", name).First(&admin).Error
-
-	if err != gorm.ErrRecordNotFound {
-		//return false
-	} else if err != nil {
-		panic(err)
+func adminLogin(c *gin.Context) {
+	uid := c.Query("uid")
+	pass := c.Query("pass")
+	fmt.Printf("uid: %q, pass: %q\n", uid, pass)
+	var user Admin
+	err := db.Table(user.TableName()).Where("uid = ?", uid).First(&user).Error
+	//fmt.Println(user)
+	var res = gin.H{
+		"success": false,
+		"name":    "",
+		"err":     "",
+	}
+	if err != nil {
+		res["err"] = err.Error()
+		c.JSON(http.StatusOK, res)
+		return
 	}
 
-	//return admin.Pass == pass
+	if user.Pass == pass {
+		res["name"] = user.Name
+		res["success"] = true
+		c.JSON(http.StatusOK, res)
+	} else {
+		res["err"] = "wrong number or password"
+		c.JSON(http.StatusOK, res)
+	}
 }
