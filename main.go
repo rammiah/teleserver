@@ -14,6 +14,7 @@ var (
 )
 
 func main() {
+	// 读取配置文件
 	file, err := os.Open("config.json")
 	if err != nil {
 		panic("no config file or open failed")
@@ -27,15 +28,18 @@ func main() {
 	if err != nil {
 		panic("no db url config")
 	}
+	// 连接数据库
 	db, err = gorm.Open("mysql", config.DBUrl)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
+	// 关闭gorm的log
 	db.LogMode(false)
 
+	gin.DisableConsoleColor()
 	engine := gin.Default()
-
+	// 设置路由信息
 	engine.POST("/userRegister", userRegister)
 	engine.GET("/userLogin", userLogin)
 	engine.GET("/ping", ping)
@@ -46,7 +50,7 @@ func main() {
 	engine.GET("/cashierLogin", cashierLogin)
 	engine.POST("/charge", charge)
 	engine.GET("customerServerLogin", customerServerLogin)
-
+	// 监听运行
 	err = engine.Run(":7384")
 	if err != nil {
 		panic(err)
