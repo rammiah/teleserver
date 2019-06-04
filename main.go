@@ -35,7 +35,7 @@ func main() {
 	}
 	defer db.Close()
 	// 关闭gorm的log
-	db.LogMode(false)
+	//db.LogMode(false)
 
 	gin.DisableConsoleColor()
 	engine := gin.Default()
@@ -52,6 +52,11 @@ func main() {
 	engine.GET("customerServerLogin", customerServerLogin)
 	engine.POST("/service", service)
 	engine.GET("/validUserId", validUserId)
+	engine.POST("/changeMenu", changeMenu)
+	engine.POST("/consume", consume)
+	engine.GET("/serviceStatistics", serviceStatistics)
+	engine.GET("/adminLogin", adminLogin)
+	engine.POST("/resetPassword", resetPassword)
 
 	// 监听运行
 	err = engine.Run(":7384")

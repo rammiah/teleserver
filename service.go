@@ -74,9 +74,21 @@ func validUserId(c *gin.Context) {
 		c.JSON(http.StatusOK, res)
 		return
 	}
+	var menu Menu
+	err = db.Table(menu.TableName()).
+		Where("mid = ?", user.Mid).
+		First(&menu).
+		Error
+	if err != nil {
+		res["err"] = err.Error()
+		c.JSON(http.StatusOK, res)
+		return
+	}
 	res["valid"] = true
 	res["success"] = true
 	res["money"] = user.Money
 	res["name"] = user.Name
+	res["menu"] = user.Mid
+	res["menu_name"] = menu.Name
 	c.JSON(http.StatusOK, res)
 }
