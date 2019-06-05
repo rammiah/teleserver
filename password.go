@@ -126,7 +126,7 @@ func resetPassword(c *gin.Context) {
 			c.JSON(http.StatusOK, res)
 			return
 		}
-		//cashier.Pass = data.Pass
+		cashier.Pass = data.Pass
 		err = db.Save(&cashier).Error
 		if err != nil {
 			res["err"] = err.Error()
