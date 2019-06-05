@@ -16,6 +16,7 @@ func consume(c *gin.Context) {
 	var res = gin.H{
 		"success": false,
 		"err":     "",
+		"money": 0,
 	}
 
 	err := c.ShouldBindJSON(&data)
@@ -54,7 +55,7 @@ func consume(c *gin.Context) {
 		c.JSON(http.StatusOK, res)
 		return
 	}
-
+	res["money"] = user.Money
 	if user.Overdue {
 		res["err"] = "user is overdue"
 		tx.Rollback()
@@ -73,6 +74,7 @@ func consume(c *gin.Context) {
 	}
 	// 完成
 	tx.Commit()
+	res["money"] = user.Money
 	res["success"] = true
 	c.JSON(http.StatusOK, res)
 }
